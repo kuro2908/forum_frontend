@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Header */
+        header {
+            background-color: #183254;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background-color: black;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+        .nav-links {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .right-section {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .search-btn {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        /* Layout */
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .main-content {
+            flex: 3;
+            padding-right: 20px;
+        }
+        .sidebar {
+            flex: 0.5;
+            background-color: #EAEBEC;
+            border-radius: 20px;
+            padding: 20px;
+        }
+        .post {
+            border-radius: 20px;
+            background-color: #EAEBEC;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    {{> header}}  <!-- Import phần header -->
+    <div class="container">
+        <div class="main-content">
+            {{{body}}} <!-- Nội dung từng trang -->
+        </div>
+        <div class="sidebar">
+            Thanh bên phải
+        </div>
+    </div>
+</body>
+</html>

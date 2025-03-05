@@ -1,0 +1,29 @@
+<header>
+    <div class="logo"></div>
+    <nav class="nav-links">
+        <a href="/">Tutorium Forum</a>
+        
+    </nav>
+    <div class="right-section">
+    
+          <span id="display-name" style="color: black; font-weight: bold;">Loading...</span>
+    </div>
+</header>
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+    try {
+        const userid = req.session.userid;
+        const response = await fetch(`/api/posts/getUser/${userid}`); // Gọi API backend
+        const data = await response.json();
+
+        if (response.ok) {
+            document.getElementById("display-name").textContent = data.displayname;
+        } else {
+            document.getElementById("display-name").textContent = "Guest";
+        }
+    } catch (error) {
+        console.error("Lỗi khi lấy username:", error);
+        document.getElementById("display-name").textContent = "Guest";
+    }
+});
+</script>
