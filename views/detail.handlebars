@@ -1,29 +1,33 @@
-<h2 id="post-title">Tiêu đề bài viết</h2>
-<p><strong>Người đăng:</strong> <span id="post-author">Đang tải...</span></p>
-<p id="post-content"></p>
+<h2 id="post-title" style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">Tiêu đề bài viết</h2>
+<p style="margin-bottom: 10px;">
+    <strong>Người đăng:</strong> 
+    <span id="post-author" style="font-style: italic;">Đang tải...</span>
+</p>
+<p id="post-content" style="line-height: 1.5;"></p>
 
 <!-- Hiển thị hình ảnh -->
-<div id="post-images"></div>
+<div id="post-images" style="margin-top: 20px;"></div>
 
 <!-- Khu vực nhập bình luận -->
-<h3>Bình luận</h3>
-<textarea id="comment-input" placeholder="Nhập bình luận..."></textarea>
-<button id="submit-comment">Gửi</button>
+<h3 style="font-size: 18px; margin-top: 30px; margin-bottom: 10px;">Bình luận</h3>
+<textarea id="comment-input" placeholder="Nhập bình luận..." 
+    style="width: 100%; min-height: 80px; border: 1px solid #ccc; padding: 10px; resize: vertical; box-sizing: border-box;"></textarea>
+<button id="submit-comment" 
+    style="margin-top: 10px; padding: 8px 16px; border: 1px solid #ccc; background: none; cursor: pointer;">Gửi</button>
 
 <!-- Danh sách bình luận -->
-<div id="comments-container"></div>
+<div id="comments-container" style="margin-top: 20px;"></div>
 
 <script>
     async function fetchPostDetails() {
         const urlParams = new URLSearchParams(window.location.search);
-        const postid = urlParams.get("id"); // Lấy ID từ URL
+        const postid = urlParams.get("id");
         if (!postid) {
             console.error("Không tìm thấy ID bài viết.");
             return;
         }
 
         try {
-            // Lấy dữ liệu bài viết
             const postResponse = await fetch(`/api/posts/${postid}`);
             if (!postResponse.ok) throw new Error("Lỗi khi tải bài viết");
             const post = await postResponse.json();
@@ -31,23 +35,20 @@
             document.getElementById("post-title").innerText = post.title;
             document.getElementById("post-content").innerText = post.content;
 
-            // Lấy tên người đăng
             const userResponse = await fetch(`/getUser/${post.userid}`);
             if (userResponse.ok) {
                 const userData = await userResponse.json();
                 document.getElementById("post-author").innerText = userData.username || "Ẩn danh";
             }
 
-            // Hiển thị ảnh
             const imageContainer = document.getElementById("post-images");
             post.images.forEach(image => {
                 const img = document.createElement("img");
                 img.src = image;
-                img.style = "width:100%; border-radius:10px; margin-top:10px;";
+                img.style.cssText = "max-width: 100%; margin-top: 10px; display: block;";
                 imageContainer.appendChild(img);
             });
 
-            // Lấy bình luận
             fetchComments(postid);
         } catch (error) {
             console.error("Lỗi khi tải chi tiết bài viết:", error);
@@ -61,13 +62,16 @@
             const comments = await response.json();
 
             const commentContainer = document.getElementById("comments-container");
-            commentContainer.innerHTML = ""; // Xóa bình luận cũ
+            commentContainer.innerHTML = "";
 
             comments.forEach(comment => {
                 const commentElement = document.createElement("div");
-                commentElement.className = "comment";
+                commentElement.style.cssText = "padding: 10px 0; border-top: 1px solid #eee;";
                 commentElement.innerHTML = `
-                    <p><strong>${comment.username}:</strong> ${comment.content}</p>
+                    <p style="margin: 0;">
+                        <strong style="font-weight: bold;">${comment.username}:</strong> 
+                        <span>${comment.content}</span>
+                    </p>
                 `;
                 commentContainer.appendChild(commentElement);
             });
@@ -95,8 +99,8 @@
 
             if (!response.ok) throw new Error("Lỗi khi gửi bình luận");
 
-            document.getElementById("comment-input").value = ""; // Xóa nội dung nhập vào
-            fetchComments(postid); // Tải lại bình luận
+            document.getElementById("comment-input").value = "";
+            fetchComments(postid);
         } catch (error) {
             console.error("Lỗi khi gửi bình luận:", error);
         }

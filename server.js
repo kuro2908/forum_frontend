@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const handlebars = require('express-handlebars');
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -25,7 +26,9 @@ app.use('/', createProxyMiddleware({
     changeOrigin: true 
 }));
 
-const PORT = process.env.PORT || 2908;
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server đang chạy tại http://localhost:${PORT}`);
 });

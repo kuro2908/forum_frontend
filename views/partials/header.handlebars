@@ -1,29 +1,58 @@
-<header>
-    <div class="logo"></div>
-    <nav class="nav-links">
-        <a href="/">Tutorium Forum</a>
-        
-    </nav>
-    <div class="right-section">
-    
-          <span id="display-name" style="color: black; font-weight: bold;">Loading...</span>
+<header className="container ">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+
+    <div class="container-fluid d-flex justify-content-center align-items-center w-100 shadow bg-body "style="width: 100%;">
+        <div class="row " style="width: 100%;">
+            <!-- Left Section (4/12) -->
+            <div class="col-md-4 d-flex"
+                style="display:flex;margin-top: -10px; background-color: white;border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
+                <img src="/static/img/logo.png" style="width: 100%;max-width: 100px; margin-LEFt: 0px;">
+                <p class="h4 fw-bold text-dark pt-2 fs-4 "
+                    style="display: flex;align-items: center;justify-content: center;font-family: 'Roboto', sans-serif;font-size: medium;">
+                    Tutorium Forum</p>
+            </div>
+
+            <!-- Right Section (8/12) -->
+            <div class="col-md-8 d-flex justify-content-center align-items-center">
+                <div class="d-flex flex-row gap-5">
+                    <button id="openMyPosts">
+                        <span class="box p-3 w-100">
+                           Bài viết của tôi
+                        </span>
+                        </button>
+                    
+                    <button id="open-post-modal">
+                        <span class="box">
+                           Tạo bài viết
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
+
+
 </header>
 <script>
-document.addEventListener("DOMContentLoaded", async function() {
-    try {
-        const userid = req.session.userid;
-        const response = await fetch(`/api/posts/getUser/${userid}`); // Gọi API backend
-        const data = await response.json();
+    document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            req.session.userid = 21;
+            const userid = req.session.userid;
+            const response = await fetch(`/api/posts/getUser}`); // Gọi API backend
+            const data = await response.json();
 
-        if (response.ok) {
-            document.getElementById("display-name").textContent = data.displayname;
-        } else {
+            if (response.ok) {
+                document.getElementById("display-name").textContent = data.displayname;
+            } else {
+                document.getElementById("display-name").textContent = "Guest";
+            }
+        } catch (error) {
+            console.error("Lỗi khi lấy username:", error);
             document.getElementById("display-name").textContent = "Guest";
         }
-    } catch (error) {
-        console.error("Lỗi khi lấy username:", error);
-        document.getElementById("display-name").textContent = "Guest";
-    }
-});
+    });
 </script>
