@@ -15,6 +15,10 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.render('home');
 });
+
+app.get('/save', (req, res) => {
+    res.render('save');
+});
 // handlebars.registerHelper('isGoogleDocsUrl', function (url) {
 //     return url.includes("docs.google.com");
 // });
